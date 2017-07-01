@@ -1,9 +1,6 @@
 import org.junit.Test;
 
-import java.util.AbstractMap;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -23,8 +20,7 @@ public class TestVanillaCollections {
     @Test(expected = UnsupportedOperationException.class)
     public void testImmutable(){
         List<String> unmodifiableList = Collections.unmodifiableList(
-                Stream.of("first","second")
-                .collect(Collectors.toList()));
+                Arrays.asList("first","second"));
 
         unmodifiableList.add("third"); // BOOM !
     }

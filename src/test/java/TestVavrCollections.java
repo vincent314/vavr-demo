@@ -1,5 +1,4 @@
-import io.vavr.collection.HashMap;
-import io.vavr.collection.List;
+import io.vavr.collection.*;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -36,5 +35,15 @@ public class TestVavrCollections {
 
         String result = map.getOrElse("key3", "NO VALUE");
         assertEquals("NO VALUE", result);
+    }
+
+    @Test
+    public void testGroupBy() throws Throwable {
+        Customer[] customers = new TestUtils().getCustomers();
+
+        Map<String, Integer> byCountry = Array.of(customers).groupBy(Customer::getCountry)
+                .mapValues(Traversable::size);
+
+        assertEquals(749, byCountry.get("France").get().intValue());
     }
 }

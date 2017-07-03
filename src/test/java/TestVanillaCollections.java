@@ -1,6 +1,9 @@
+import io.vavr.control.Try;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -38,5 +41,19 @@ public class TestVanillaCollections {
         result = (result != null) ? result : "NO VALUE";
 
         assertEquals("NO VALUE", result);
+    }
+
+    @Test
+    public void testGroupBy() throws IOException {
+        Customer[] customers = new TestUtils().getCustomers();
+
+        Map<String, List<Customer>> byCountry = Stream.of(customers)
+                .collect(Collectors.groupingBy(Customer::getCountry));
+
+        Map<String, Integer> countByCountry = byCountry.entrySet().stream()
+                .map(entry -> new AbstractMap.SimpleEntry<>(entry.getKey(), entry.getValue().size()))
+                .collect(Collectors.toMap(AbstractMap.SimpleEntry::getKey, AbstractMap.SimpleEntry::getValue));
+
+        assertEquals(749, countByCountry.get("France").intValue());
     }
 }

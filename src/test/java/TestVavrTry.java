@@ -11,6 +11,7 @@ public class TestVavrTry {
         List<Integer> result = List.of("1234", "MONDAY")
                 .map(str -> Try
                         .of(() -> Integer.parseInt(str))
+                        .onSuccess(value -> System.out.println("Youpiii ! " + value))
                         .onFailure(System.out::println)
                         .getOrElse(0));
 
